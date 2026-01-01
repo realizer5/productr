@@ -1,16 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
     --color-cultured: #f7f8fa;
     --color-imperial-blue: #111652;
-    --color-blue-gray: #98A2B3;
-    --color-light-gray: #D4D4D4;
+    --color-blue-gray: #98a2b3;
+    --color-light-gray: #d4d4d4;
     --font-display: "Inter", sans-serif;
 }
-
-width: 981;
-height: 1088.0960693359375;
-top: -36px;
-opacity: 0.95;
-mix-blend-mode: Hard light;
