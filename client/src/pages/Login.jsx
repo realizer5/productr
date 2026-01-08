@@ -1,26 +1,46 @@
-import { Link } from "react-router";
-import { Input, Button, LoginCard, LoginBgCard, OtpInput } from "../components";
-import { useState } from "react";
+import {
+    Input,
+    Button,
+    OtpInput,
+    LinkBigBtn,
+} from "../components";
+import { useState, useRef } from "react";
 
 const Login = () => {
     const [cred, setCred] = useState("");
     const [showOtp, setShowOtp] = useState(false);
-    const [seconds, setSeconds] = useState(0);
+    const [timer, setTimer] = useState(30);
+
+    const timerInterval = useRef(null);
+
+    const requestOtp = () => {
+        // otp requesting logic
+        if (timerInterval.current) {
+            clearInterval(timerInterval.current);
+        }
+
+        timerInterval.current = setInterval(() => {
+            setTimer((prev) => {
+                if (prev <= 1) {
+                    clearInterval(timerInterval.current);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setShowOtp(true);
+        requestOtp();
         const formData = new FormData(e.currentTarget);
         const otpValue = formData.get("otp");
-        if (otpValue.length < 5) return;
-        console.log(otpValue);
+        if (!otpValue) return;
+        // otp verification logic
     };
 
     return (
-        <div className="w-full h-screen grid grid-cols-2 bg-cultured font-display">
-            <LoginBgCard>
-                <LoginCard />
-            </LoginBgCard>
             <div className="m-auto flex flex-col gap-96">
                 <div>
                     <h1 className="text-2xl font-semibold text-imperial-blue p-4">
@@ -48,28 +68,25 @@ const Login = () => {
                             <span className="text-blue-gray mr-1">
                                 Didn't receive OTP?
                             </span>
-                            <button className="text-imperial-blue cursor-pointer">
-                                Resend in {seconds}s
+                            <button
+                                className="text-imperial-blue cursor-pointer"
+                                onClick={requestOtp}
+                                disabled={timer > 0}>
+                                Resend {timer ? "in " + timer + "s" : ""}
                             </button>
                         </div>
                     )}
                 </div>
                 <div>
                     {!showOtp && (
-                        <Link to="/signup">
-                            <button className="grid p-4 border border-light-gray rounded-lg text-sm w-full cursor-pointer">
-                                <span className="text-blue-gray">
-                                    Don't have a Productr Account
-                                </span>
-                                <span className="text-imperial-blue font-medium">
-                                    SignUp Here
-                                </span>
-                            </button>
-                        </Link>
+                        <LinkBigBtn
+                            link="/auth/signup"
+                            mainText="Signup"
+                            grayText="Don’t have a Productr Account"
+                        />
                     )}
                 </div>
             </div>
-        </div>
     );
 };
 

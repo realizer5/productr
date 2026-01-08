@@ -78,6 +78,7 @@ const OtpInput = ({ length = 5 }) => {
                         onChange={(e) => handleChange(e, index)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         onPaste={handlePaste}
+                        required
                         autoFocus={index === 0}
                     />
                 ))}
