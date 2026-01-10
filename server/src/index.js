@@ -3,6 +3,7 @@ import { app } from "./app.js";
 import { configDotenv } from "dotenv";
 
 configDotenv({ path: "./.env" });
+
 connectDB()
     .then(() => {
         app.on("error", (error) => {
